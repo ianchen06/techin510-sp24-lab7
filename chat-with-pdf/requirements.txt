@@ -1,0 +1,6 @@
+streamlit
+tiktoken
+pymupdf
+sentence-transformers
+google-generativeai
+python-dotenv
