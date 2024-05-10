@@ -8,7 +8,10 @@ A notebook that walks through the following topics
 
 1. What is Sentence Embeddings
 1. Semantic Search
+1. Sentence Tokenization
 1. Retrieval Augmented Generation
+1. Extracting texts from PDF
+1. Large scale RAG with PostgreSQL
 
 [Chat with PDF](./chat-with-pdf/)
 
