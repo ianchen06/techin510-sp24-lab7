@@ -29,6 +29,6 @@ def split_large_text(large_text, max_tokens):
 def displayPDF(div, f):
     base64_pdf = base64.b64encode(f).decode("utf-8")
     # Embedding PDF in HTML
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
+    pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
     # Displaying File
     div.markdown(pdf_display, unsafe_allow_html=True)
