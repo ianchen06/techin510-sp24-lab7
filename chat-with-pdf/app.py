@@ -50,14 +50,13 @@ with col1:
                         "(Score: %.4f)" % hit["score"],
                     )
 
-            prompt = f"""You are an AI assistant that answers the user's question. Please answer based on the provided context below. If there is no information in the context, reply 'I do not have enough information to answer the question.'
+            prompt = f'''
+            You will be provided with a document delimited by triple quotes and a question. Your task is to answer the question using only the provided document and to cite the passage(s) of the document used to answer the question. If the document does not contain the information needed to answer this question then simply write: "Insufficient information." If an answer to the question is provided, it must be annotated with a citation. Use the following format for to cite relevant passages ({"citation": …}).
             
-            Context: {context}
+            """{context}"""
             
             Question: {query}
-
-            Answer:
-            """
+            '''
             with st.spinner("Generating response..."):
                 response = llm.generate_content(prompt)
                 st.write(response.text)
