@@ -36,8 +36,16 @@ with col1:
 
         query = st.text_input("Enter your query")
         if query:
-            query_embedding = model.encode(query, convert_to_tensor=True)
-            hits = semantic_search(query_embedding, docs_embeddings, top_k=2)
+            keywords = llm.generate_content(
+                """Based on the following user query, give me a comma separated list of 3 keywords for searching relevant documents.
+                
+                Query: %s
+                """
+                % query
+            ).text
+            st.write(f"Searching for %s" % keywords)
+            query_embedding = model.encode(keywords, convert_to_tensor=True)
+            hits = semantic_search(query_embedding, docs_embeddings, top_k=3)
 
             context = "\n\n".join(
                 [split_text_list[hit["corpus_id"]] for hit in hits[0]]
@@ -51,7 +59,7 @@ with col1:
                     )
 
             prompt = f'''
-            You will be provided with a document delimited by triple quotes and a question. Your task is to answer the question using only the provided document and to cite the passage(s) of the document used to answer the question. If the document does not contain the information needed to answer this question then simply write: "Insufficient information." If an answer to the question is provided, it must be annotated with a citation. Use the following format for to cite relevant passages ({"citation": …}).
+            You will be provided with a document delimited by triple quotes and a question. Your task is to answer the question using only the provided document and to cite the passage(s) of the document used to answer the question. If the document does not contain the information needed to answer this question then simply write: "Insufficient information." If an answer to the question is provided, it must be annotated with a citation. Use the following format for to cite relevant passages ({{"citation": ...}}).
             
             """{context}"""
             
